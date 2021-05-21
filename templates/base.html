@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Bootstrap E-commerce Templates</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<!--[if ie]><meta content='IE=8' http-equiv='X-UA-Compatible'/><![endif]-->
+
+        {% load static %}
+
+		<!-- bootstrap -->
+		<link rel="stylesheet" href={% static "bootstrap/css/bootstrap.min.css" %} >
+		<link rel="stylesheet" href={% static "bootstrap/css/bootstrap-responsive.min.css" %}>
+
+		<link rel="stylesheet" href={% static "themes/css/bootstrappage.css" %}/>
+		
+		<!-- global styles -->
+		<link rel="stylesheet" href={% static "themes/css/flexslider.css" %}/>
+		<link rel="stylesheet" href={% static "themes/css/main.css" %}/>
+
+		<!-- scripts -->
+		<script src={% static "themes/js/jquery-1.7.2.min.js" %}></script>
+		<script src={% static "bootstrap/js/bootstrap.min.js" %}></script>
+		<script src={% static "themes/js/superfish.js" %}></script>
+		<script src={% static "themes/js/jquery.scrolltotop.js" %}></script>
+		<!--[if lt IE 9]>
+			<script src={% static "http://html5shim.googlecode.com/svn/trunk/html5.js" %}></script>
+			<script src={% static "js/respond.min.js" %}></script>
+		<![endif]-->
+	</head>
+    <body>		
+		<div id="top-bar" class="container">
+			<div class="row">
+				<div class="span4">
+					<form action="{% url "main_clothesmarket:search" %}" method="get" class="d-flex editContent">
+						<input type="search" Placeholder="eg. T-sirt" name="q" class="form-control" required="" >
+                        <button type="submit" class="btnl-btn">Подтвердить</button>
+					</form>
+				</div>
+				<div class="span8">
+					<div class="account pull-right">
+						<ul class="user-menu">
+                            {% with total_items=cart|length %}
+                                    <li><a href="{% url 'cart_clothesmarket:cart_detail' %}">Корзина{{ total_items }} товар(и), {{ cart.get_total_price }} &#8372;</a></li>
+                            {% endwith %}
+                            <li><a href="{% url 'logout' %}">logout</a></li>
+							<li><a href="{% url 'register' %}">Регистрация</a></li>
+                            <li><a href="{% url 'login' %}">Логин</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="wrapper" class="container">
+			<section class="navbar main-menu">
+				<div class="navbar-inner main-menu">				
+					<a href="{% url 'main_clothesmarket:main_page_view' %}" class="logo pull-left"><img src={% static "themes/images/logo.png" %} class="site_logo" alt=""></a>
+					{% for category in categories %}
+                    <nav id="menu" class="pull-right">
+						<ul>
+							<li><a href="../category_detail_view/{{ category.pk }}">{{ category.title }}</a>
+								<ul>
+									{% for kinds in category.kinds %}
+                                        <li><a href="../productsman/{{ kinds.pk }}">{{ kinds.title }}</a></li>
+                                    {% endfor %}
+								</ul>
+							</li>
+						</ul>
+					</nav>
+                    {% endfor %}
+				</div>
+			</section>
+
+			{% block content %}
+            {% endblock %}
+
+			<section id="footer-bar">
+				<div class="row">
+					<div class="span3">
+						<h4>Navigation</h4>
+						<ul class="nav">
+							<li><a href="{% url 'main_clothesmarket:main_page_view' %}">Homepage</a></li>
+							<li><a href="{% url 'main_clothesmarket:about_us_view' %}">About Us</a></li>
+							<li><a href="{% url 'main_clothesmarket:contact_page_view' %}">Contac Us</a></li>
+							<li><a href="{% url 'cart_clothesmarket:cart_detail' %}">Your Cart</a></li>
+							<li><a href="{% url 'login' %}">Login</a></li>
+						</ul>					
+					</div>
+					<div class="span4">
+                        {% if user.is_staff %}
+						<h4>Панель Управления</h4>
+						<ul class="nav">
+							<li><a href="{% url 'list_of_messages' %}">Сообщения</a></li>
+							<li><a href="{% url 'list_of_categories' %}">Категории</a></li>
+							<li><a href="{% url 'list_of_kinds' %}">Виды Продукции</a></li>
+							<li><a href="{% url 'list_of_products' %}">Товары</a></li>
+						</ul>
+                        {% endif %}
+					</div>
+					<div class="span5">
+						<p class="logo"><img src={% static "themes/images/logo.png" %} class="site_logo"  alt=""></p>
+						<br/>
+						<span class="social_icons">
+							<a class="facebook" href="#">Facebook</a>
+							<a class="twitter" href="#">Twitter</a>
+							<a class="skype" href="#">Skype</a>
+							<a class="vimeo" href="#">Vimeo</a>
+						</span>
+					</div>					
+				</div>	
+			</section>
+		</div>
+		<script src={% static "themes/js/common.js" %}></script>
+		<script src={% static "themes/js/jquery.flexslider-min.js" %}></script>
+		<script type="text/javascript">
+			$(function() {
+				$(document).ready(function() {
+					$('.flexslider').flexslider({
+						animation: "fade",
+						slideshowSpeed: 4000,
+						animationSpeed: 600,
+						controlNav: false,
+						directionNav: true,
+						controlsContainer: ".flex-container" // the container that holds the flexslider
+					});
+				});
+			});
+		</script>
+    </body>
+</html>

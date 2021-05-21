@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="header_text sub">
+    <a href="{% url "main_clothesmarket:main_page_view" %}" img class="pageBanner" src="themes/images/pageBanner.png" alt="New products"></a> </a>
+    <h4><span>Shopping Cart</span></h4>
+</section>
+<section class="main-content">
+    <div class="row">
+        <div class="span9">
+            <h4 class="title"><span class="text"><strong>Ваша</strong> Корзина</span></h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Удалить</th>
+                        <th>Фото</th>
+                        <th>Наименование</th>
+                        <th>Колличество</th>
+                        <th>Цена товара</th>
+                        <th>Общая цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in cart %}
+                    {% with product=item.product %}
+                    <tr>
+                        <td><a href="{% url "cart_clothesmarket:cart_remove" product.id %}"  class="button" type="button">Delete</a></td>
+                        <td><a href="{{ product.get_absolute_url }}">
+                            <img src=" {% if product.photo %}{{ product.photo.url }}{% else %}{% static "img/no_image.png" %}{% endif %}"></a></td>
+                        <td>{{ product.title}}</td>
+                        <td><input type="text" placeholder="1" class="input-mini"></td>
+                        <td>{{item.price }}</td>
+                        <td>{{ item.total_price}} гр.</td>
+                    </tr>
+                    {% endwith %}
+                {% endfor %}
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>{{ cart.get_total_price }} гр.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="buttons center">
+                <a href="{% url "order_clothesmarket:order_create" %}" button class="btn" type="button">Перейти к оформлению</a>
+                <a href="{% url 'main_clothesmarket:main_page_view' %}" button class="btn" type="button">Подолжить покупки</a>
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

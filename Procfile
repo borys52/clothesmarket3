@@ -1,0 +1,1 @@
+web: gunicorn clothesmarket.wsgi --log-file -

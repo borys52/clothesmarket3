@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="header_text sub">
+</section>
+<section class="main-content">
+    <div class="row">
+        <div class="span9">
+            <ul class="thumbnails listing-products">
+                {% for item in product %}
+                            <li class="span3">
+                                <div class="product-box">
+                                    <span class="sale_tag"></span>
+                                    <a href="/kind_detail_view/{{ item.pk }}"><img  src={{ item.photo.url }}></a><br/>
+                                    <a href="/kind_detail_view/{{ item.pk }}">{{ item.title }}</a><br/>
+                                    <p class="price"><a>{{ item.price }}</a></p>
+                                </div>
+                            </li>
+                {% endfor %}
+            </ul>
+            <hr>
+            <ul class="pagination pagination-small pagination-left">
+                {% if product.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{product.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">предидущая</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% for page in product.paginator.page_range %}
+                    {% if page == product.number %}
+                        <li class="page-item active">
+                            <a class="page-link" href="#"> {{ page }}
+                                <span class="sr-only">(текущая)</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page }}">
+                                {{ page }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if product.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ product.next_page_number }} " aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">следующая</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

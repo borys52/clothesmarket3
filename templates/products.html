@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="header_text sub">
+    <h4 class="title"> {{ category.pk }}{{ categories.title }}</h4>
+</section>
+<section class="main-content">
+    <div class="row">
+        <div class="span9">
+            <ul class="thumbnails listing-products">
+                {% for item in product %}
+                    <li class="span3">
+                        <div class="product-box">
+                            <span class="sale_tag"></span>
+                            <a href="/productsman/{{ item.pk }}"><img  src={{ item.photo.url }}></a><br/>
+                            <a href="/productsman/{{ item.pk }}">{{ item.title }}</a><br/>
+                            <p class="price"><a>{{ item.price }}</a></p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <hr>
+            <div id="navigation" class="container">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <nav aria-label="Page navigation example">
+                            <div class="pagination pagination-small pagination-left">
+                                {% if product.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{product.previous_page_number }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">предидущая</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% for page in product.paginator.page_range %}
+                                    {% if page == product.number %}
+                                        <li class="page-item active">
+                                            <a class="page-link" href="#"> {{ page }}
+                                                <span class="sr-only">текущая</span>
+                                            </a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ page }}">
+                                                {{ page }}
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if product.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ product.next_page_number }} " aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">следующая</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form action="{% url 'main_clothesmarket:product_filtered_view' %}" method="get">
+            <div class="left-side my-4">
+                <h3 class="sear-head editContent">Фильтр по Продукции</h3>
+                    <ul class="w3layouts-box-list">
+                        {% for category in categories %}
+                            {% for kinds in category.kinds %}
+                        <li class="editContent">
+                            <input type="checkbox" class="checked" name="category_id" value="{{ kinds.kind_order }}">
+                            <span class="span editContent">{{ kinds.title }}</span>
+                        </li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+            </div>
+            <button type="submit">Поиск</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

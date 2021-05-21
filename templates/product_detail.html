@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="header_text sub">
+    <h4><span>{{ product.title }}</span></h4>
+</section>
+<section class="main-content">
+    <div class="row">
+        <div class="span9">
+            <div class="row">
+                <div class="span4">
+                    <a href="{{ product.pk }}"><img  alt="" src={{ product.photo.url }}></a><br/>
+                    <a href="{{ product.pk }}">{{ product.title }}</a><br/>
+                    <ul class="thumbnails small">
+                        <li class="span1">
+                            <a href="{{ product.subphoto1.url }}"  class="thumbnail" data-fancybox-group="group1" title="Description 2"><img alt="" src={{ product.subphoto1.url }}></a>
+                        </li>
+                        <li class="span1">
+                            <a href="{{ product.subphoto2.url }}" class="thumbnail" data-fancybox-group="group1" title="Description 3"><img alt="" src={{ product.subphoto2.url }}></a>
+                        </li>
+                        <li class="span1">
+                            <a href="{{ product.subphoto3.url }}" class="thumbnail" data-fancybox-group="group1" title="Description 4"><img alt="" src={{ product.subphoto3.url }}></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="span5">
+                    <address>
+                        <strong>Brand:</strong> <span>{{ product.manufactura }}</span><br>
+                        <strong>Product Code:</strong> <span>{{ product.id}}</span><br>
+                        <strong>Availability:</strong> <span>{% if product.available is True %}В наличии{% else %}Нет в наличии{% endif %}</span><br>
+                    </address>
+                    <h4><strong><a>{{ product.price }}</a></strong></h4>
+                    <p>{{ product.des }}</p>
+                </div>
+                <div class="span5">
+                    <form class="form-inline">
+                        <a {% if product.available is True %} href="{% url "cart_clothesmarket:cart_add" product.id %}"  class=button"   type="submit">Add to cart {% endif %} </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

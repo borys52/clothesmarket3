@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section  class="homepage-slider" id="home-slider">
+    <div class="flexslider">
+        <ul class="slides">
+            <li>
+                <img src={% static "themes/images/carousel/banner-3.jpg" %} alt="" />
+            </li>
+            <li>
+                <img src={% static "themes/images/carousel/banner-4.jpg" %} alt="" />
+                <div class="intro">
+                    <h1>До Конца Мая</h1>
+                    <p><span>1+1=3</span></p>
+                    <p><span>Покупая две вещи, третья в ПОДАРОК!!!!</span></p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+<section class="main-content">
+    <div class="row">
+        <div class="span12">
+            <div class="row">
+                <div class="span12">
+                    <h4 class="title">
+                        <span class="pull-left"><span class="text"><span class="line">Feature <strong>Products</strong></span></span></span>
+                    </h4>
+                    <div id="myCarousel" class="myCarousel carousel slide">
+                        <div class="carousel-inner">
+                            <div class="active item">
+                                <ul class="thumbnails">
+                                    {% for category in categories %}
+                                        <li class="span3">
+                                            <div class="product-box">
+                                                <span class="sale_tag"></span>
+                                                <a href="/category_detail_view/{{ category.pk }}"><img  src={{ category.photo.url }}></a><br/>
+                                                <a href="/category_detail_view/{{ category.pk }}" class="title">{{  category.title }}</a><br/>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+        </div>
+    </div>
+</section>
+{% endblock %}

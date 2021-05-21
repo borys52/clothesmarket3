@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="section-title text-center">
+        <h3>Обработанные Сообщения</h3>
+    </div>
+    <div class="col-md-10 col-md-offset-1">
+        {% for item in messages %}
+        <div class="row">
+            <div class="col-md-3">
+                <a href='{% url 'cancel_update_message' pk=item.pk %}'>
+                    <button type="button" class="btn btn-primary btn-sm">Отменить</button>
+                </a>
+            </div>
+            <div class="col-md-3">{{ item.user_name }}</div>
+            <div class="col-md-3">{{ item.user_email }}</div>
+            <div class="col-md-3">{{ item.pub_date|date:'d-m-Y' }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-9"><p>{{ item.user_message }}</p></div>
+        </div>
+        <hr/>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

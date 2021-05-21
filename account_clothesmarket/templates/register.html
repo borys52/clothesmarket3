@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="header_text sub">
+    <h4><span>Login or Regsiter</span></h4>
+</section>
+<section class="main-content">
+    <div class="row">
+        <div class="span7">
+            <h4 class="title"><span class="text"><strong>Регистрация</strong></span></h4>
+            <form action="" method="post">
+                <fieldset>
+                    {% csrf_token %}
+                    <div class="control-group">
+                        <label class="control-label">Имя</label>
+                        <div class="controls">
+                            {{ form.username }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Пароль:</label>
+                        <div class="controls">
+                            {{ form.password1 }}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Введите пароль еще раз:</label>
+                        <div class="controls">
+                            {{ form.password2 }}
+                        </div>
+                    </div>
+                    <hr>
+                    <input type="submit" value="Зарегестрироваться">
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
