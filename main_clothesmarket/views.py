@@ -140,11 +140,10 @@ def contact_page_view(request):
 
 
 def get_products_queryset(request):
-    product = Product.objects.filter(Q(category__in=request.GET.getlist("category_id")) | Q(manufactura=('Adidas')))
+    product = Product.objects.filter(Q(category__in=request.GET.getlist("category_id")))
     paginator = Paginator(product, 12)
     page = request.GET.get('page')
     product = paginator.get_page(page)
-    # product = Product.objects.filter(manufactura='Adidas')
     return render(request, 'products_kind.html', context={
         'product': product,
         'categories': categories,
